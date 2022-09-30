@@ -1,9 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+  devise :omniauthable, :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -16,6 +15,4 @@ class User < ApplicationRecord
       # user.skip_confirmation!
     end
   end
-
-  
 end
